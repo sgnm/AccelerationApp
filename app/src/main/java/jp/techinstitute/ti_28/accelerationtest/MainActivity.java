@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private float a = 0.1f;
     private float[] currentOrientationValues = {0.0f, 0.0f, 0.0f};
     private float threshold = 0.0f;
+    private float max = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +92,17 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                             (currentOrientationValues[2] * currentOrientationValues [2])) - 9.8f;
 //            Log.d("SQRT", String.valueOf(sum));
 
-            if (sum > threshold) {
-                Log.d("TAG", String.valueOf(sum));
-                Log.d("TAG", String.valueOf(threshold));
+            if (sum > threshold && sum < max) {
+//                Log.d("TAG", String.valueOf(sum));
+                Log.d("TAG", String.valueOf(max));
+//                Log.d("TAG", String.valueOf(threshold));
 //                Log.d("XYZ", str);
+            }
+
+            if (sum >= max){
+                max = sum; //現在の値が前回より大きかったときに、maxに現在の値をいれてる。つまり最大値がでる
+            }else {
+                max = 0.0f; //現在の値が最大値より小さいとき、最大値をリセットする必要があるので0を入れてる
             }
 
             //3軸の加速度から加速度の合計を出したけど、ログが2,3個出てしまうので、
