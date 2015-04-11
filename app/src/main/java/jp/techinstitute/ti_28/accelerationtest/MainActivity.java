@@ -25,6 +25,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private float[] currentOrientationValues = {0.0f, 0.0f, 0.0f};
     private float threshold = 0.0f;
     private float max = 0.0f;
+    private long currentTime = 0;
+    private long pastTime;
+    private long diffTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,12 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 Log.d("TAG", String.valueOf(max));
 //                Log.d("TAG", String.valueOf(threshold));
 //                Log.d("XYZ", str);
+                pastTime = currentTime; //最初は0。下のコードにより、次は一つ前の時刻がpastTimeに入る
+                currentTime = System.currentTimeMillis(); //現在時刻を取得
+                diffTime = currentTime - pastTime; //時刻の差分を出してる
+                Log.d("TIME", String.valueOf(pastTime));
+                Log.d("TIME", String.valueOf(currentTime));
+                Log.d("TIME", String.valueOf(diffTime));
             }
 
             if (sum >= max){
